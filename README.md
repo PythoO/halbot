@@ -1,0 +1,2 @@
+# halbot
+A personal assistant
