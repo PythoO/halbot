@@ -4,6 +4,7 @@ from neuron.stt import stt
 from neuron.tts import say
 
 from neuron.general_conversations import WORDS as gc_words
+from neuron.forecast import WORDS as fc_words
 
 name = profile.data['name']
 say('Welcome ' + name + ', systems are now ready to run. How can I help you?')
@@ -19,19 +20,23 @@ def brain(msg):
     def check_message(msg):
         """
         Check wich neuron to use.
-        :param check:
+        :param msg:
         :return:
         """
-        print(gc_words.keys())
         words_of_message = msg.split()
-        print(words_of_message)
+        find = False
         for key in gc_words:
-            for word in gc_words[key]['groups']:
-                print word
-                print words_of_message
-                if set(word).issubset(set(words_of_message)):
-                    print('find')
-
+            if words_of_message in gc_words[key]['groups']:
+                getattr(neuron.general_conversations, key)()
+                find = True
+                break
+        for key in fc_words:
+            if words_of_message in fc_words[key]['groups']:
+                getattr(neuron.forecast, key)()
+                find = True
+                break
+        if not find:
+            neuron.general_conversations.undefined()
 
     check_message(msg)
 

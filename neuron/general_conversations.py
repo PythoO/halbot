@@ -19,28 +19,40 @@ def who_are_you():
     messages = ['I am ' + va_name + ', your lovely personal assistant.',
                 va_name + ', didnt I tell you before?',
                 'You ask that so many times! I am ' + va_name]
-    say(random.choice(messages))
+    return_msg = random.choice(messages)
+    say(return_msg)
 
 
 def how_am_i():
     replies = ['You are goddamn handsome!', 'My knees go weak when I see you.', 'You are sexy!',
                'You look like the kindest person that I have met.']
-    say(random.choice(replies))
+    return_msg = random.choice(replies)
+    say(return_msg)
 
 
 def tell_joke():
     jokes = ['What happens to a frogs car when it breaks down? It gets toad away.',
              'Why was six scared of seven? Because seven ate nine.',
              'What is the difference between snowmen and snowwomen? Snowballs.', 'No, I always forget the punch line.']
-    say(random.choice(jokes))
+    return_msg = random.choice(jokes)
+    say(return_msg)
 
 
 def who_am_i():
-    say('You are ' + profile.data['name'] + ', a brilliant person. I love you!')
+    name = profile.data['name']
+    me = ['You are ' + name + ', a brilliant person. I love you!',
+          'I know that question, you are ' + name,
+          ]
+    return_msg = random.choice(me)
+    say(return_msg)
 
 
 def how_are_you():
-    say('I am fine, thank you.')
+    me = ['I am fine, thank you.',
+          'I\'m not bad, thank you',
+          ]
+    return_msg = random.choice(me)
+    say(return_msg)
 
 
 def are_you_up():

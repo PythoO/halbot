@@ -8,10 +8,14 @@ def say(message):
     This function takes a message as an argument and converts it to
     speech depending on the OS.
     """
+    print(message)
     if sys.platform == 'darwin':
         tts_engine = 'say'
-        if profile.data['va_gender'] == 'female':
+        if profile.data['va_darwin_gender'] == 'female':
             language = '-vVicki'
+            return subprocess.call([tts_engine, language, message])
+        elif profile.data['va_darwin_gender'] == 'robot':
+            language = '-v' + profile.data['va_robot']
             return subprocess.call([tts_engine, language, message])
         else:
             return subprocess.call([tts_engine, message])
