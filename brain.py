@@ -1,13 +1,14 @@
-import neuron.general_conversations
+import neuron
 import neuron.profile as profile
 from neuron.stt import stt
 from neuron.tts import say
 
 from neuron.general_conversations import WORDS as gc_words
 from neuron.forecast import WORDS as fc_words
+from neuron.twitter import WORDS as twitter_words
 
 name = profile.data['name']
-say('Welcome ' + name + ', systems are now ready to run. How can I help you?')
+#say('Welcome ' + name + ', systems are now ready to run. How can I help you?')
 
 
 def brain(msg):
@@ -33,6 +34,11 @@ def brain(msg):
         for key in fc_words:
             if words_of_message in fc_words[key]['groups']:
                 getattr(neuron.forecast, key)()
+                find = True
+                break
+        for key in twitter_words:
+            if words_of_message in twitter_words[key]['groups']:
+                getattr(neuron.twitter, key)()
                 find = True
                 break
         if not find:
