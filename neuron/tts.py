@@ -3,7 +3,7 @@ import sys
 import profile as profile
 
 
-def say(message):
+def say(message, lang='en'):
     """
     This function takes a message as an argument and converts it to
     speech depending on the OS.
@@ -11,15 +11,18 @@ def say(message):
     print(message)
     if sys.platform == 'darwin':
         tts_engine = 'say'
-        if profile.data['va_darwin_gender'] == 'female':
-            language = '-vVicki'
-            return subprocess.call([tts_engine, language, message])
-        elif profile.data['va_darwin_gender'] == 'robot':
-            language = '-v' + profile.data['va_robot']
+        if lang == 'fr':
+            if profile.data['va_darwin_gender'] == 'female':
+                language = '-vAmelie'
+            else:
+                language = '-vThomas'
             return subprocess.call([tts_engine, language, message])
         else:
-            return subprocess.call([tts_engine, message])
-
+            if profile.data['va_darwin_gender'] == 'female':
+                language = '-vVicki'
+                return subprocess.call([tts_engine, language, message])
+            else:
+                return subprocess.call([tts_engine, message])
     elif sys.platform.startswith('linux') or sys.platform == 'win32':
         tts_engine = 'espeak'
         if profile.data['va_gender'] == 'female':

@@ -6,6 +6,7 @@ from neuron.tts import say
 from neuron.general_conversations import WORDS as gc_words
 from neuron.forecast import WORDS as fc_words
 from neuron.twitter import WORDS as twitter_words
+from neuron.pipotron import WORDS as pipo_words
 
 name = profile.data['name']
 #say('Welcome ' + name + ', systems are now ready to run. How can I help you?')
@@ -39,6 +40,11 @@ def brain(msg):
         for key in twitter_words:
             if words_of_message in twitter_words[key]['groups']:
                 getattr(neuron.twitter, key)()
+                find = True
+                break
+        for key in pipo_words:
+            if words_of_message in pipo_words[key]['groups']:
+                getattr(neuron.pipotron, key)()
                 find = True
                 break
         if not find:
