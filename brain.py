@@ -1,3 +1,4 @@
+import speech_recognition as sr
 import neuron
 import neuron.profile as profile
 from neuron.stt import stt
@@ -9,7 +10,11 @@ from neuron.twitter import WORDS as twitter_words
 from neuron.pipotron import WORDS as pipo_words
 
 name = profile.data['name']
-#say('Welcome ' + name + ', systems are now ready to run. How can I help you?')
+IBM_user = profile.data['IBM_user']
+IBM_pass = profile.data['IBM_pass']
+
+
+# say('Welcome ' + name + ', systems are now ready to run. How can I help you?')
 
 
 def brain(msg):
@@ -54,9 +59,23 @@ def brain(msg):
 
 
 while True:
-    message = stt()
-    if message == 'quit':
+
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print('say something !!')
+        audio = r.listen(source)
+
+    try:
+        speech_msg = r.recognize_ibm(audio, username=IBM_user, password=IBM_pass).lower()
+
+        print("IBM Speech think you say : " + speech_msg)
+    except sr.UnknownValueError:
+        print('IBM Speech could not understand audio')
+    except sr.RequestError as e:
+        print("Could not request result from IBM; {0}".format(e))
+
+    if speech_msg == 'quit':
         say('Good bye ' + name + ', have a nice day.')
         exit()
     else:
-        brain(message)
+        brain(speech_msg)
