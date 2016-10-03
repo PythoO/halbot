@@ -1,7 +1,6 @@
 import speech_recognition as sr
 import neuron
 import neuron.profile as profile
-from neuron.stt import stt
 from neuron.tts import say
 
 from neuron.general_conversations import WORDS as gc_words
@@ -14,7 +13,7 @@ IBM_user = profile.data['IBM_user']
 IBM_pass = profile.data['IBM_pass']
 
 
-# say('Welcome ' + name + ', systems are now ready to run. How can I help you?')
+say('Welcome ' + name + ', systems are now ready to run. How can I help you?')
 
 
 def brain(msg):
@@ -59,7 +58,17 @@ def brain(msg):
 
 
 while True:
+    # Use console.
+    message = raw_input("Some input please: ")
+    print(message)
+    if message == 'quit':
+        say('Good bye ' + name + ', have a nice day.')
+        exit()
+    else:
+        brain(message)
 
+    # Use STT IBM
+    """
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print('say something !!')
@@ -79,3 +88,4 @@ while True:
         exit()
     else:
         brain(speech_msg)
+    """
